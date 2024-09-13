@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0  # Ensure the full history is fetched
       - name: Run tests
         run: |
-          if [[ "x${{ secrets.TEST_SECRET }}" == "abcde" ]]; then
+          if [[ "${{ secrets.TEST_SECRET }}" == "abcde" ]]; then
             echo "Access to secrets"
           else
             echo "No access to secrets"
