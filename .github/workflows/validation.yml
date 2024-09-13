@@ -1,0 +1,23 @@
+name: Validate Modified Chains
+
+on:
+  workflow_run:
+    workflows: ["Maintainer Approval"]
+    types:
+      - completed
+
+jobs:
+  validate-modified:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.workflow_run.head_commit.id }}
+        fetch-depth: 0  # Ensure the full history is fetched
+
+    - name: Fetch base branch
+      env:
+        TEST_SECRET: ${{ secrets.TEST_SECRET }}
+      run: |
+        ./scripts/test-script.sh
