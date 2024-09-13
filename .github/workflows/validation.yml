@@ -1,8 +1,10 @@
 name: Validate Modified Chains
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_run:
+    workflows: ["Maintainer Approval"]
+    types:
+      - completed
 
 jobs:
   validate-modified:
@@ -18,4 +20,5 @@ jobs:
       env:
         TEST_SECRET: ${{ secrets.TEST_SECRET }}
       run: |
+        chmod +x ./scripts/test-script.sh
         ./scripts/test-script.sh
